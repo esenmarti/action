@@ -39,8 +39,11 @@ async function fetchWithRetry(url, options = {}, retries = 3, initialDelay = 100
 (async function main() {
     // You can use await inside this function block
     try {
+        console.log(`fetchWithRetry ${actionsUrl}&audience=${domain}`);
         const res = await fetchWithRetry(`${actionsUrl}&audience=${domain}`, { headers: { 'Authorization': `Bearer ${actionsToken}` } }, 5);
         const json = await res.json();
+        console.log(`result(json): ${json}`);
+        console.log(`fetchWithRetry https://${domain}/sts/exchange?scope=${scope}&identity=${identity}`);
         const res2 = await fetchWithRetry(`https://${domain}/sts/exchange?scope=${scope}&identity=${identity}`, { headers: { 'Authorization': `Bearer ${json.value}` } });
         const json2 = await res2.json();
 
